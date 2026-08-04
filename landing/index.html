@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NailBook · Online booking for nail salons</title>
+<meta name="description" content="Your salon, booked while you sleep. Clients pick the service, the time, even the design. NailBook fills your chairs and keeps your regulars coming back.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1B1518; --bg2:#241C1F; --rose:#C4A6A0; --rose-soft:rgba(196,166,160,.16); --rose-line:rgba(196,166,160,.28);
+  --blush:#E8D5D0; --cream:#F5EFEA; --dim:#B9A6A1; --gold:#c9a87c; --dark:#141013;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:var(--bg);color:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(196,166,160,0) 0%,rgba(196,166,160,.07) 55%,rgba(196,166,160,.16) 100%);pointer-events:none}
+.site{max-width:600px;margin:0 auto;padding:0 20px 60px;position:relative}
+a{text-decoration:none;color:inherit}
+.serif{font-family:'Cormorant Garamond',serif}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 2px}
+.logo-s{font-weight:600;font-size:17px;letter-spacing:-.01em}
+.logo-s em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-weight:600;font-size:20px}
+.pill{display:inline-block;background:var(--gold);color:var(--dark);border-radius:999px;padding:10px 20px;font-size:13px;font-weight:600;transition:transform .15s}
+.pill:hover{transform:translateY(-1px)}
+.pill.ghost{background:transparent;color:var(--cream);border:1px solid var(--rose-line)}
+.pill.big{padding:15px 34px;font-size:15px}
+
+/* hero: arch photo with stacked lockup */
+.hero{position:relative;border-radius:26px 26px 300px 300px / 26px 26px 320px 320px;overflow:hidden;margin-top:4px;box-shadow:0 34px 90px rgba(0,0,0,.5)}
+.hero img{width:100%;height:560px;object-fit:cover;object-position:center 30%;display:block;filter:saturate(.92) brightness(.86)}
+.hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,21,24,.55) 0%,rgba(27,21,24,.12) 38%,rgba(27,21,24,.68) 100%)}
+.hero .lockup{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:56px 24px 0;text-align:center}
+.lk-script{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(44px,11vw,64px);line-height:.8;color:var(--cream);text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.lk-caps{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(64px,17vw,104px);line-height:.94;letter-spacing:.04em;color:var(--cream);text-shadow:0 2px 30px rgba(0,0,0,.45)}
+.lk-caps span{color:var(--gold)}
+.lk-rule{width:44px;height:1px;background:var(--cream);opacity:.7;margin:20px auto 16px}
+.lk-by{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--blush);font-weight:500}
+.lk-name{font-family:'Hanken Grotesk',sans-serif;font-size:clamp(17px,4.4vw,22px);letter-spacing:.34em;text-transform:uppercase;font-weight:500;margin-top:10px}
+.featstrip{display:flex;justify-content:center;gap:22px;margin:20px 4px 0;font-size:11px;letter-spacing:.1em;color:var(--blush);text-transform:uppercase;font-weight:500;flex-wrap:wrap}
+.featstrip span{display:flex;align-items:center;gap:6px}
+.featstrip svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:430px){.featstrip{gap:13px;font-size:10px}}
+
+/* section band */
+.band{margin:54px 0 30px;padding:13px 10px;text-align:center;background:linear-gradient(90deg,rgba(196,166,160,0),var(--rose-soft) 18%,var(--rose-soft) 82%,rgba(196,166,160,0));border-top:1px solid var(--rose-line);border-bottom:1px solid var(--rose-line)}
+.band h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(22px,5.4vw,28px);letter-spacing:.42em;text-transform:uppercase;color:var(--cream);margin-right:-.42em}
+
+/* icon circle grid */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px 22px;text-align:center;padding:8px 4px}
+.pc .circ{width:74px;height:74px;border-radius:50%;background:var(--rose-soft);border:1px solid var(--rose-line);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.pc .circ svg{width:30px;height:30px;stroke:var(--blush);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.pc h3{font-size:13px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--cream);margin-bottom:8px}
+.pc p{font-size:13px;color:var(--dim);line-height:1.65;max-width:230px;margin:0 auto}
+
+/* phone mockup (light card on dark) */
+.phone{background:#FFFFFF;border-radius:30px;overflow:hidden;color:#1E1A16;box-shadow:0 30px 80px rgba(0,0,0,.5);margin:6px auto 0;max-width:420px}
+.p-hdr{background:#111;color:#f5f0ea;padding:16px 20px 12px}
+.p-brand{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500}
+.p-brand em{color:var(--gold);font-style:normal}
+.p-tag{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:2px}
+.p-body{padding:16px 20px 20px}
+.p-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#9A9184;font-weight:700;margin:0 0 8px}
+.p-svc{display:flex;justify-content:space-between;align-items:flex-start;border:1px solid #E5E0D6;border-radius:12px;padding:10px 13px;margin-bottom:7px}
+.p-svc.on{border-color:var(--gold);background:#FAF7F2}
+.p-svc-name{font-size:13px;font-weight:600}
+.p-svc-desc{font-size:10.5px;color:#9A9184;margin-top:2px}
+.p-price{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:#A47C52;padding-left:10px;white-space:nowrap}
+.p-times{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 14px}
+.p-time{border:1px solid #E5E0D6;border-radius:9px;padding:8px 4px;font-size:11.5px;text-align:center}
+.p-time.on{background:#141210;color:var(--gold);border-color:#141210}
+.p-time.full{color:#9A9184;text-decoration:line-through}
+.p-btn{background:#141210;color:#f5f0ea;text-align:center;border-radius:999px;padding:12px;font-size:13px;font-weight:600}
+.mock-note{text-align:center;font-size:12px;color:var(--dim);margin-top:16px;letter-spacing:.06em}
+
+/* why rows */
+.why{display:flex;flex-direction:column;gap:12px;padding:2px 4px}
+.wrow{display:flex;gap:14px;align-items:center;background:var(--rose-soft);border:1px solid var(--rose-line);border-radius:16px;padding:15px 18px}
+.wrow svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.wrow b{font-weight:600;font-size:14.5px;color:var(--cream)}
+.wrow span{font-size:12.5px;color:var(--dim);display:block;margin-top:1px}
+
+/* proof */
+.proof{text-align:center;padding:6px 10px}
+.proof p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,4.6vw,23px);color:var(--blush);line-height:1.5;max-width:440px;margin:0 auto 18px}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.stat{background:var(--rose-soft);border:1px solid var(--rose-line);border-radius:14px;padding:11px 18px}
+.stat b{display:block;font-size:17px;font-weight:700;color:var(--cream)}
+.stat span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+
+/* plans stacked */
+.plans{display:flex;flex-direction:column;gap:14px}
+.plan{background:var(--rose-soft);border:1px solid var(--rose-line);border-radius:20px;padding:24px 22px;text-align:center}
+.plan.hot{border:1.5px solid var(--gold);background:linear-gradient(180deg,rgba(201,168,124,.14),var(--rose-soft));position:relative}
+.hot-tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:999px;padding:4px 14px}
+.plan h3{font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:600;color:var(--blush);margin-bottom:6px}
+.plan .price{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:500;color:var(--cream)}
+.plan .price small{font-size:14px;color:var(--dim)}
+.plan ul{list-style:none;margin:12px 0 18px}
+.plan li{font-size:13px;color:var(--dim);padding:4px 0}
+.plan li b{color:var(--cream);font-weight:600}
+.plan .pill{width:100%;max-width:260px}
+.pricing-note{text-align:center;color:var(--dim);font-size:11.5px;margin-top:16px;letter-spacing:.04em}
+
+/* faq */
+.faq{padding:0 2px}
+.q{border-bottom:1px solid var(--rose-line)}
+.q button{width:100%;background:none;border:none;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--cream);text-align:left;padding:17px 30px 17px 2px;cursor:pointer;position:relative}
+.q button::after{content:'+';position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--gold);font-weight:400;transition:transform .2s}
+.q.open button::after{transform:translateY(-50%) rotate(45deg)}
+.q .a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.q.open .a{max-height:220px}
+.q .a p{font-size:13.5px;color:var(--dim);padding:0 6px 17px 2px;line-height:1.7}
+
+/* final + footer */
+.final{text-align:center;padding:60px 10px 34px}
+.final h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,7.6vw,40px);line-height:1.15;margin-bottom:10px}
+.final h2 em{font-style:italic;color:var(--gold)}
+.final p{color:var(--dim);font-size:14.5px;margin-bottom:26px}
+.foot{border-top:1px solid var(--rose-line);margin-top:44px;padding-top:26px;text-align:center}
+.foot .logo-s{font-size:19px}
+.foot-rows{display:flex;flex-direction:column;gap:9px;margin:18px 0 20px;font-size:12.5px;color:var(--dim)}
+.foot-rows a{display:flex;align-items:center;justify-content:center;gap:8px}
+.foot-rows a:hover{color:var(--cream)}
+.foot-rows svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:1.6}
+.tiny{font-size:11px;color:rgba(185,166,161,.55);letter-spacing:.04em}
+.tiny a{text-decoration:underline}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+.rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="site">
+
+  <div class="top">
+    <a class="logo-s" href="#top">Nail<em>book</em></a>
+    <a class="pill" href="mailto:nailbyminh@gmail.com?subject=NailBook%20early%20access">Get early access</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <img src="img/hero.jpg" alt="Manicured hands with elegant french tip nails">
+    <div class="veil"></div>
+    <div class="lockup">
+      <div class="lk-script">Nail</div>
+      <div class="lk-caps">BO<span>O</span>K</div>
+      <div class="lk-rule"></div>
+      <div class="lk-by">Online booking for</div>
+      <div class="lk-name">Nail Salons &amp; Techs</div>
+    </div>
+  </header>
+
+  <div class="featstrip">
+    <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Books 24/7</span>
+    <span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v3M15 4v3M4 10h16"/></svg>No double booking</span>
+    <span><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/></svg>No app needed</span>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="band rv"><h2>How it works</h2></div>
+  <div class="pgrid">
+    <div class="pc rv">
+      <div class="circ"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M9 3v4M15 3v4M4 10h16M9 15h2"/></svg></div>
+      <h3>Book online</h3>
+      <p>Clients book from your link or QR code, any hour, even after close.</p>
+    </div>
+    <div class="pc rv" style="transition-delay:.06s">
+      <div class="circ"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 10-3.2 6.4L21 20l-.9-3.1A8 8 0 0021 12z"/><path d="M9 11h6M9 14h3"/></svg></div>
+      <h3>Text alerts</h3>
+      <p>Every new booking texts your phone. Tomorrow is never a surprise.</p>
+    </div>
+    <div class="pc rv" style="transition-delay:.12s">
+      <div class="circ"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.3 5.5.7-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.5-.7z"/></svg></div>
+      <h3>Rewards</h3>
+      <p>Points on every visit and birthday treats. Regulars stay yours.</p>
+    </div>
+    <div class="pc rv" style="transition-delay:.18s">
+      <div class="circ"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/><path d="M14 9h4M14 13h3M5 19l3.2-3.2a2 2 0 012.8 0L14 19"/></svg></div>
+      <h3>Their inspo</h3>
+      <p>Clients attach the design they want, so your tech already knows.</p>
+    </div>
+  </div>
+
+  <!-- THE EXPERIENCE -->
+  <div class="band rv"><h2>The experience</h2></div>
+  <div class="rv">
+    <div class="phone">
+      <div class="p-hdr">
+        <div class="p-brand">Your Salon <em>&amp; Spa</em></div>
+        <div class="p-tag">Book your visit · Powered by NailBook</div>
+      </div>
+      <div class="p-body">
+        <div class="p-label">Choose your service</div>
+        <div class="p-svc on">
+          <div><div class="p-svc-name">Deluxe Pedicure</div><div class="p-svc-desc">Callus removal and extended massage</div></div>
+          <div class="p-price">$45</div>
+        </div>
+        <div class="p-svc">
+          <div><div class="p-svc-name">Gel-X Full Set</div><div class="p-svc-desc">Soft gel extensions, no acrylic</div></div>
+          <div class="p-price">$65</div>
+        </div>
+        <div class="p-label" style="margin-top:12px">Tuesday, available times</div>
+        <div class="p-times">
+          <div class="p-time full">9:00 AM</div>
+          <div class="p-time on">10:30 AM</div>
+          <div class="p-time">12:00 PM</div>
+          <div class="p-time">1:30 PM</div>
+          <div class="p-time full">3:00 PM</div>
+          <div class="p-time">4:30 PM</div>
+        </div>
+        <div class="p-btn">Confirm booking</div>
+      </div>
+    </div>
+    <p class="mock-note">Your menu, your hours, your brand on top.</p>
+  </div>
+
+  <!-- WHY -->
+  <div class="band rv"><h2>Why salons switch</h2></div>
+  <div class="why">
+    <div class="wrow rv"><svg viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1111.2 3a6.6 6.6 0 009.8 9.8z"/></svg><div><b>Booked while you sleep</b><span>The 7pm phone tag becomes overnight bookings.</span></div></div>
+    <div class="wrow rv" style="transition-delay:.06s"><svg viewBox="0 0 24 24"><path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/></svg><div><b>No double booking</b><span>Capacity per time slot. Busy days stay sane.</span></div></div>
+    <div class="wrow rv" style="transition-delay:.12s"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M5 21h14"/></svg><div><b>Your clients stay your clients</b><span>Your list, your data. Export anytime.</span></div></div>
+  </div>
+
+  <!-- PROOF -->
+  <div class="band rv"><h2>Born on the salon floor</h2></div>
+  <div class="proof rv">
+    <p>"NailBook runs a real California salon every day. If it does not survive a Saturday rush, it does not ship."</p>
+    <div class="stats">
+      <div class="stat"><b>Live</b><span>real salon</span></div>
+      <div class="stat"><b>800+</b><span>clients imported</span></div>
+      <div class="stat"><b>24/7</b><span>always booking</span></div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="band rv" id="pricing"><h2>Pricing</h2></div>
+  <div class="plans">
+    <div class="plan rv">
+      <h3>Walkthrough</h3>
+      <div class="price">$0</div>
+      <ul>
+        <li><b>Personal demo</b>, live on a real salon</li>
+        <li>No commitment</li>
+      </ul>
+      <a class="pill ghost" href="mailto:nailbyminh@gmail.com?subject=NailBook%20walkthrough">Book a walkthrough</a>
+    </div>
+    <div class="plan hot rv">
+      <span class="hot-tag">Most popular</span>
+      <h3>Salon</h3>
+      <div class="price">$59<small>/mo</small></div>
+      <ul>
+        <li><b>Online booking</b>, link and QR</li>
+        <li><b>Text alerts</b> to your phone</li>
+        <li><b>Rewards</b> and check in kiosk</li>
+        <li><b>Front desk</b> checkout and history</li>
+      </ul>
+      <a class="pill" href="mailto:nailbyminh@gmail.com?subject=NailBook%20early%20access%20Salon">Get early access</a>
+    </div>
+    <div class="plan rv">
+      <h3>Starter</h3>
+      <div class="price">$29<small>/mo</small></div>
+      <ul>
+        <li><b>Booking and alerts</b> only</li>
+        <li>1 location</li>
+      </ul>
+      <a class="pill ghost" href="mailto:nailbyminh@gmail.com?subject=NailBook%20early%20access%20Starter">Get early access</a>
+    </div>
+  </div>
+  <p class="pricing-note">Early access pricing. Lock it in now, keep it as we grow. Cancel anytime.</p>
+
+  <!-- FAQ -->
+  <div class="band rv"><h2>Questions</h2></div>
+  <div class="faq rv">
+    <div class="q"><button>Do my clients need an app?</button>
+      <div class="a"><p>No. They book from a link or QR code in any browser. No account, no download, no password.</p></div></div>
+    <div class="q"><button>Can I keep my current client list?</button>
+      <div class="a"><p>Yes. We import your clients from your old system, with names, phones and history. The salon we run moved 800+ clients in one afternoon.</p></div></div>
+    <div class="q"><button>What about no shows?</button>
+      <div class="a"><p>Clients who pick their own time show up more, and points give them a reason to come back. Booking alerts let you confirm tomorrow in minutes.</p></div></div>
+    <div class="q"><button>Is my data really mine?</button>
+      <div class="a"><p>Yes. Your clients, your history, your numbers. Export everything anytime, and if you leave, it leaves with you.</p></div></div>
+    <div class="q"><button>How do I start?</button>
+      <div class="a"><p>Book a free walkthrough. We show you the system live, then set yours up with your menu and your client list.</p></div></div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="final rv">
+    <h2>The chairs stay <em>full</em>.</h2>
+    <p>NailBook runs the front desk so you can run the salon.</p>
+    <a class="pill big" href="mailto:nailbyminh@gmail.com?subject=NailBook%20early%20access">Get early access</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <span class="logo-s">Nail<em>book</em></span>
+    <div class="foot-rows">
+      <a href="mailto:nailbyminh@gmail.com?subject=NailBook"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>nailbyminh@gmail.com</a>
+      <a href="https://nailmind.phaminh.com"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.3 5.5.7-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.5-.7z"/></svg>NailMind, our AI design studio</a>
+      <a href="https://naildesk.phaminh.com"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>NailDesk, our salon POS</a>
+    </div>
+    <div class="tiny">© 2026 NailBook · <a href="#" onclick="alert('Privacy policy coming with early access launch.');return false">Privacy</a> · <a href="#" onclick="alert('Terms coming with early access launch.');return false">Terms</a></div>
+  </div>
+
+</div>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .1 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+document.querySelectorAll('.q button').forEach(b => b.onclick = () => {
+  const q = b.parentElement;
+  const was = q.classList.contains('open');
+  document.querySelectorAll('.q').forEach(x => x.classList.remove('open'));
+  if (!was) q.classList.add('open');
+});
+</script>
+</body>
+</html>
