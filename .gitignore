@@ -1,0 +1,4 @@
+.DS_Store
+*.icloud
+.mcp.json
+.claude/settings.local.json
